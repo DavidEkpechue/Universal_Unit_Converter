@@ -12,6 +12,8 @@ class App:
         self.window.title(f'{self.window_name}')
         self.window.geometry(f'{self.window_x}x{self.window_y}')
 
+
+
         # tk variables
         self.scale_var = tk.IntVar()
 

@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import math as math
 
 
 class App:
@@ -8,73 +9,64 @@ class App:
         self.window = tk.Tk()
         self.window.geometry(f"{window_x}x{window_y}")
         self.window.title(window_name)
-        self.units = ['Feet', 'Miles', 'Yards', 'Inches', 'Light Years', 'Centimeters', 'Kilometers', '']
-        self.feet_conversion = 0.3048
-        self.miles_conversion = 1609.34
-        self.yards_conversion = 0.9144
-        self.inches_conversion = 0.0254
-        self.centimeters_conversion = 0.01
-        self.Kilometers_conversion = 1000
-        self.lightyear_conversion = 9460660000000000
+        self.window.attributes('-topmost', True)
+        self.window.resizable(False, False)
+        self.units = ['Feet', 'Miles', 'Yards',
+                      'Inches', 'Light Years', 'Meters',
+                      'Centimeters', 'Kilometers']
+
+        self.conversions = {'Feet': 0.3048, 'Miles': 1609.34, 'Yards': 0.9144,
+                            'Inches': 0.0254, 'Meters': 1, 'Centimeters': 0.01,
+                            'Kilometers': 1000, 'Light Years': 9460660000000000}
 
         # tk variables
         self.int_var = tk.IntVar()
-        self.radio_var = tk.IntVar()
-        self.unit_sting = tk.StringVar(value=self.units[0])
+        self.unit_string_from = tk.StringVar(value=self.units[0])
+        self.unit_string_to = tk.StringVar(value=self.units[0])
+
+
+
+        # frames
+
 
         # Widgets
-        self.label1 = ttk.Label(self.window,
-                                text='Enter distance:')
+
+        self.label1 = ttk.Label(self.window, text='Enter distance:')
         self.label1.pack()
 
-        self.user_entry = ttk.Entry(self.window,
-                                    textvariable=self.int_var)
+        self.user_entry = ttk.Entry(self.window, textvariable=self.int_var)
         self.user_entry.pack()
 
-        self.button1 = ttk.Button(self.window, text='Convert',
-                                  command=self.convert_to_meters)
+        self.dropdown_from = ttk.Combobox(self.window, textvariable=self.unit_string_from, values=self.units)
+        self.dropdown_from.pack()
+
+        self.dropdown_to = ttk.Combobox(self.window, textvariable=self.unit_string_to, values=self.units)
+        self.dropdown_to.pack()
+
+        self.button1 = ttk.Button(self.window, text='Convert', command=self.convert_units)
         self.button1.pack()
 
-        self.result_label = ttk.Label(self.window,
-                                      text="Conversion Result:")
+        self.result_label = ttk.Label(self.window, text="Conversion Result:")
         self.result_label.pack()
-
-        self.dropdown = ttk.Combobox(self.window,
-                                     textvariable=self.unit_sting,
-                                     values=self.units)
-        self.dropdown.pack()
 
         self.run()
 
     def run(self):
         self.window.mainloop()
 
-    def convert_to_meters(self):
+    def convert_units(self):
         distance = self.int_var.get()
-        conversion_type = self.unit_sting.get()
+        unit_from = self.unit_string_from.get()
+        unit_to = self.unit_string_to.get()
 
-        if conversion_type == 'Feet':
-            result = distance * self.feet_conversion
-        elif conversion_type == 'Miles':
-            result = distance * self.miles_conversion
-        elif conversion_type == 'Yards':
-            result = distance * self.yards_conversion
-        elif conversion_type == 'Inches':
-            result = distance * self.inches_conversion
-        elif conversion_type == 'Centimeters':
-            result = distance * self.centimeters_conversion
-        elif conversion_type == 'Kilometers':
-            result = distance * self.Kilometers_conversion
-        elif conversion_type == 'Light Years':
-            result = distance * self.lightyear_conversion
-        else:
-            result = "Invalid selection"
+        # Convert the input to meters first
+        meters = distance * self.conversions[unit_from]
 
-        if isinstance(result, (float, int)):
-            self.result_label["text"] = f"Result: {result:.2f} meters"
-        else:
-            self.result_label["text"] = "Invalid selection"
+        # Then convert from meters to the target unit
+        result = meters / self.conversions[unit_to]
+
+        self.result_label["text"] = f"Result: {result:.2f} {unit_to}"
 
 
 # Create app instance
-A1 = App(800, 600, 'Distance Converter')
+A1 = App(400, 600, 'Distance Converter')
