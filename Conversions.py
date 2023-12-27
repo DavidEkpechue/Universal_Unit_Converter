@@ -1,6 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
 import customtkinter as ctk
+import Colours
 
 
 class BaseConverter(ctk.CTkFrame):
@@ -17,27 +17,57 @@ class BaseConverter(ctk.CTkFrame):
         self.create_layout()
 
     def create_widget(self, label_text):
-        self.label1 = ctk.CTkLabel(self, text=f'Enter {label_text}:')
-        self.label2 = ctk.CTkLabel(self, text='TO')
-        self.user_entry = ctk.CTkEntry(self, textvariable=self.value_var)
-        self.dropdown_from = ctk.CTkOptionMenu(self, values=self.units, variable=self.unit_string_from)
-        self.dropdown_to = ctk.CTkOptionMenu(self, values=self.units, variable=self.unit_string_to)
+        button_colour = Colours.Matte.purple
+        button_colour2 = Colours.Matte.purple_hover
+        button_colour3 = Colours.Matte.purple_hover_hover
+        hover_button_colour = Colours.Matte.purple_hover
+
+        self.label1 = ctk.CTkLabel(self,
+                                   text=f'Enter {label_text}:')
+
+        self.label2 = ctk.CTkLabel(self,
+                                   text='TO',
+                                   anchor='center',
+                                   font=('', 10), )
+
+        self.user_entry = ctk.CTkEntry(self,
+                                       textvariable=self.value_var)
+
+        self.dropdown_from = ctk.CTkOptionMenu(self,
+                                               values=self.units,
+                                               variable=self.unit_string_from,
+                                               font=('', 10),
+                                               button_color= button_colour2,
+                                               button_hover_color=button_colour3,
+                                               fg_color= button_colour)
+
+        self.dropdown_to = ctk.CTkOptionMenu(self,
+                                               values=self.units,
+                                               variable=self.unit_string_to,
+                                               font=('', 10),
+                                               button_color= button_colour2,
+                                               button_hover_color=button_colour3,
+                                               fg_color= button_colour)
+
         self.button1 = ctk.CTkButton(self,
                                      text='Convert',
                                      command=lambda: self.convert_units(),
-                                     fg_color='#473d4d')
+                                     fg_color=button_colour,
+                                     hover_color=hover_button_colour )
         self.result_label = ctk.CTkLabel(self, text="Conversion Result:")
 
     def create_layout(self):
-        self.grid_rowconfigure((0, 1, 2, 3, 4), weight=1, uniform='a')
-        self.grid_columnconfigure((0, 1, 2), weight=1, uniform='a')
+        self.grid_rowconfigure((0, 1, 2, 3, 4), weight=5, uniform='a')
+        self.grid_columnconfigure((0, 2), weight=5, uniform='a')
+        self.grid_columnconfigure(1, weight=1, uniform='a')
 
         self.label1.grid(row=0, column=0, columnspan=3, sticky='news')
-        self.label2.grid(row=2, column=1, columnspan=3, sticky='news')
+        self.label2.grid(row=2, column=0, columnspan=3, sticky='ew')
         self.user_entry.grid(row=1, column=0, columnspan=3, sticky='news', pady=20)
-        self.dropdown_from.grid(row=2, column=0, sticky='news', pady=20)
-        self.dropdown_to.grid(row=2, column=2, sticky='news', pady=20)
-        self.button1.grid(row=3, column=0, columnspan=3, sticky='news')
+        self.dropdown_from.grid(row=2, column=0, sticky='ew', pady=10)
+        self.dropdown_to.grid(row=2, column=2, sticky='ew', pady=10)
+        self.button1.grid(row=3, column=0, columnspan=3, sticky='news',
+                          padx=30, pady=10)
         self.result_label.grid(row=4, column=0, columnspan=3, sticky='news')
 
     def convert_units(self):
@@ -59,7 +89,7 @@ class BaseConverter(ctk.CTkFrame):
         # Then convert from the base unit to the target unit
         result = base_unit_value / self.conversions[unit_to]
 
-        self.result_label.configure(text=f"Result: {result:.2f} {unit_to}")
+        self.result_label.configure(text=f"{result:.2f} {unit_to}")
         print(result)
 
 
