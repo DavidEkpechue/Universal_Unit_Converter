@@ -6,6 +6,7 @@ from NavBar import *
 from Conversions import *
 
 
+
 def create_small_layout():
     print('small_layout')
 
@@ -40,7 +41,18 @@ class App(ctk.CTk):
             'Volume': VolumeConverter(self),
             'Pressure': PressureConverter(self),
             'Energy': EnergyConverter(self)
-            # Add other converter classes here if necessary
+        }
+
+        self.icons = {
+            'Distance': ImageTk.PhotoImage(Image.open('Icons/ruler.png')),
+            'Temperature': ImageTk.PhotoImage(Image.open('Icons/thermometer.png')),
+            'Mass': ImageTk.PhotoImage(Image.open('Icons/weight.png')),
+            'Area': ImageTk.PhotoImage(Image.open('Icons/square.png')),
+            'Time': ImageTk.PhotoImage(Image.open('Icons/alarm-clock.png')),
+            'Speed': ImageTk.PhotoImage(Image.open('Icons/wind.png')),
+            'Volume': ImageTk.PhotoImage(Image.open('Icons/box.png')),
+            'Pressure': ImageTk.PhotoImage(Image.open('Icons/minimize-2.png')),
+            'Energy': ImageTk.PhotoImage(Image.open('Icons/zap.png'))
         }
 
         # Configure grid system for the app
@@ -54,7 +66,7 @@ class App(ctk.CTk):
             page.grid(row=0, column=0, columnspan=4, sticky="nsew")
             page.grid_remove()
 
-        self.navbar = NavigationBar(self, self.pages)
+        self.navbar = NavigationBar(self, self.pages, self.icons)
         self.navbar.grid(row=1, column=0, columnspan=10, sticky="nsew")
 
         self.sidebar()
@@ -68,15 +80,18 @@ class App(ctk.CTk):
         button_colour_light = Colours.Pastel.blue
         hover_button_colour_light = Colours.Pastel.blue_hover
 
-        self.animated_panel = SideBar(self, 1.0, 0.7)
+        menu_icon = ImageTk.PhotoImage(Image.open('Icons/menu.png'))
 
-        button = ctk.CTkButton(self, text='options', command=self.animated_panel.animate,
+
+        self.animated_panel = SideBar(self, 1.0, 0.7)
+        # Modify the font here
+
+        button = ctk.CTkButton(self, text='', command=self.animated_panel.animate,
                                fg_color=(button_colour_light, button_colour),
                                hover_color=(hover_button_colour_light, hover_button_colour),
-                               font=('', 7),
-                               text_color=('black', 'white'))
+                               text_color=('black', 'white'),
+                               image= menu_icon)
         button.grid(column=9, row=1, pady=10, padx=5, sticky="nsew")
-
     @staticmethod
     def create_small_layout():
         print('Current size: Small')
@@ -130,7 +145,7 @@ class SideBar(ctk.CTkFrame):
 
     def animate_forward(self):
         if self.pos > self.end_pos:
-            self.pos -= 0.008
+            self.pos -= 0.01
             self.place(relx=self.pos, rely=0.05, relwidth=self.width, relheight=0.755)
             self.after(10, self.animate_forward)
         else:
@@ -138,7 +153,7 @@ class SideBar(ctk.CTkFrame):
 
     def animate_backwards(self):
         if self.pos < self.start_pos:
-            self.pos += 0.008
+            self.pos += 0.01
             self.place(relx=self.pos, rely=0.05, relwidth=self.width, relheight=0.755)
             self.after(10, self.animate_backwards)
         else:

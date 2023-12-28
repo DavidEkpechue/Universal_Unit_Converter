@@ -13,6 +13,7 @@ class BaseConverter(ctk.CTkFrame):
         self.unit_string_to = ctk.StringVar(value=self.units[0])
         self.value_var = tk.StringVar(value='0')
 
+
         self.create_widget(label_text)
         self.create_layout()
 
@@ -30,7 +31,7 @@ class BaseConverter(ctk.CTkFrame):
         self.label2 = ctk.CTkLabel(self,
                                    text='TO',
                                    anchor='center',
-                                   font=('', 10), )
+                                   font=('Open Sans', 10), )
 
         self.user_entry = ctk.CTkEntry(self,
                                        textvariable=self.value_var)
@@ -38,7 +39,7 @@ class BaseConverter(ctk.CTkFrame):
         self.dropdown_from = ctk.CTkOptionMenu(self,
                                                values=self.units,
                                                variable=self.unit_string_from,
-                                               font=('', 10),
+                                               font=('', 12),
                                                button_color=(button2_colour_light, button_colour2),
                                                button_hover_color=(button3_colour_light, button_colour3),
                                                fg_color=(button_colour_light, button_colour),
@@ -47,7 +48,7 @@ class BaseConverter(ctk.CTkFrame):
         self.dropdown_to = ctk.CTkOptionMenu(self,
                                              values=self.units,
                                              variable=self.unit_string_to,
-                                             font=('', 10),
+                                             font=('', 12),
                                              button_color=(button2_colour_light, button_colour2),
                                              button_hover_color=(button3_colour_light, button_colour3),
                                              fg_color=(button_colour_light, button_colour),

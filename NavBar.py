@@ -1,12 +1,15 @@
 import customtkinter as ctk
 import Colours
+from PIL import Image, ImageTk
 
 
 class NavigationBar(ctk.CTkFrame):
-    def __init__(self, parent, pages):
+    def __init__(self, parent, pages, icons):
         super().__init__(parent)
         self.pages = pages
+        self.icons = icons
         self.select_page(next(iter(self.pages.values())))  # Selects the first converter as default
+
         self.create_widget()
         self.create_layout()
 
@@ -17,13 +20,16 @@ class NavigationBar(ctk.CTkFrame):
             button_colour_light = Colours.Pastel.blue
             hover_button_colour_light = Colours.Pastel.blue_hover
 
+            icon = self.icons.get(name)  # Retrieve the icon for the current page
+
             button = ctk.CTkButton(master=self,
                                    font=('', 7),
-                                   text=name,
+                                   text='',
                                    command=lambda page=page: self.select_page(page),
                                    fg_color=(button_colour_light, button_colour),
                                    hover_color=(hover_button_colour_light, hover_button_colour),
-                                   text_color=('black', 'white'))
+                                   text_color=('black', 'white'),
+                                   image=icon)  # Set the icon for the button
             button.grid(row=0, column=i, pady=10, padx=5, sticky="nsew")  # Place buttons in row 0
 
     def create_layout(self):
@@ -39,3 +45,4 @@ class NavigationBar(ctk.CTkFrame):
 
         # Make the selected page visible
         selected_page.grid()
+
