@@ -23,7 +23,6 @@ class NavigationBar(ctk.CTkFrame):
             icon = self.icons.get(name)  # Retrieve the icon for the current page
 
             button = ctk.CTkButton(master=self,
-                                   font=('', 7),
                                    text='',
                                    command=lambda page=page: self.select_page(page),
                                    fg_color=(button_colour_light, button_colour),

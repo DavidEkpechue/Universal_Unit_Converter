@@ -42,17 +42,18 @@ class App(ctk.CTk):
             'Pressure': PressureConverter(self),
             'Energy': EnergyConverter(self)
         }
-
+        iconx = 50
+        icony = 50
         self.icons = {
-            'Distance': ImageTk.PhotoImage(Image.open('Icons/ruler.png')),
-            'Temperature': ImageTk.PhotoImage(Image.open('Icons/thermometer.png')),
-            'Mass': ImageTk.PhotoImage(Image.open('Icons/weight.png')),
-            'Area': ImageTk.PhotoImage(Image.open('Icons/square.png')),
-            'Time': ImageTk.PhotoImage(Image.open('Icons/alarm-clock.png')),
-            'Speed': ImageTk.PhotoImage(Image.open('Icons/wind.png')),
-            'Volume': ImageTk.PhotoImage(Image.open('Icons/box.png')),
-            'Pressure': ImageTk.PhotoImage(Image.open('Icons/minimize-2.png')),
-            'Energy': ImageTk.PhotoImage(Image.open('Icons/zap.png'))
+            'Distance': ImageTk.PhotoImage(Image.open('Icons/ruler.png').resize((iconx, icony))),
+            'Temperature': ImageTk.PhotoImage(Image.open('Icons/thermometer.png').resize((iconx, icony))),
+            'Mass': ImageTk.PhotoImage(Image.open('Icons/weight.png').resize((iconx, icony))),
+            'Area': ImageTk.PhotoImage(Image.open('Icons/square.png').resize((iconx, icony))),
+            'Time': ImageTk.PhotoImage(Image.open('Icons/alarm-clock.png').resize((iconx, icony))),
+            'Speed': ImageTk.PhotoImage(Image.open('Icons/wind.png').resize((iconx, icony))),
+            'Volume': ImageTk.PhotoImage(Image.open('Icons/box.png').resize((iconx, icony))),
+            'Pressure': ImageTk.PhotoImage(Image.open('Icons/minimize-2.png').resize((iconx, icony))),
+            'Energy': ImageTk.PhotoImage(Image.open('Icons/zap.png').resize((iconx, icony)))
         }
 
         # Configure grid system for the app
