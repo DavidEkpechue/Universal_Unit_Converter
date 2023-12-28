@@ -20,7 +20,9 @@ class BaseConverter(ctk.CTkFrame):
         button_colour = Colours.Matte.purple
         button_colour2 = Colours.Matte.purple_hover
         button_colour3 = Colours.Matte.purple_hover_hover
-        hover_button_colour = Colours.Matte.purple_hover
+        button_colour_light = Colours.Pastel.blue
+        button2_colour_light = Colours.Pastel.blue_hover
+        button3_colour_light = Colours.Pastel.blue_hover_hover
 
         self.label1 = ctk.CTkLabel(self,
                                    text=f'Enter {label_text}:')
@@ -37,24 +39,27 @@ class BaseConverter(ctk.CTkFrame):
                                                values=self.units,
                                                variable=self.unit_string_from,
                                                font=('', 10),
-                                               button_color= button_colour2,
-                                               button_hover_color=button_colour3,
-                                               fg_color= button_colour)
+                                               button_color=(button2_colour_light, button_colour2),
+                                               button_hover_color=(button3_colour_light, button_colour3),
+                                               fg_color=(button_colour_light, button_colour),
+                                               text_color=('black', 'white'))
 
         self.dropdown_to = ctk.CTkOptionMenu(self,
-                                               values=self.units,
-                                               variable=self.unit_string_to,
-                                               font=('', 10),
-                                               button_color= button_colour2,
-                                               button_hover_color=button_colour3,
-                                               fg_color= button_colour)
+                                             values=self.units,
+                                             variable=self.unit_string_to,
+                                             font=('', 10),
+                                             button_color=(button2_colour_light, button_colour2),
+                                             button_hover_color=(button3_colour_light, button_colour3),
+                                             fg_color=(button_colour_light, button_colour),
+                                             text_color=('black', 'white'))
 
         self.button1 = ctk.CTkButton(self,
                                      text='Convert',
                                      command=lambda: self.convert_units(),
-                                     fg_color=button_colour,
-                                     hover_color=hover_button_colour )
-        self.result_label = ctk.CTkLabel(self, text="Conversion Result:")
+                                     fg_color=(button_colour_light, button_colour),
+                                     hover_color=(button2_colour_light, button_colour2),
+                                     text_color=('black', 'white'))
+        self.result_label = ctk.CTkLabel(self, text="Conversion Result:", text_color=('black', 'white'))
 
     def create_layout(self):
         self.grid_rowconfigure((0, 1, 2, 3, 4), weight=5, uniform='a')

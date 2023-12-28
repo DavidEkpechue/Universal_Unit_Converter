@@ -57,7 +57,25 @@ class App(ctk.CTk):
         self.navbar = NavigationBar(self, self.pages)
         self.navbar.grid(row=1, column=0, columnspan=10, sticky="nsew")
 
+        self.sidebar()
+
         self.mainloop()
+
+    def sidebar(self):
+        button_colour = Colours.Matte.purple
+        hover_button_colour = Colours.Matte.purple_hover
+
+        button_colour_light = Colours.Pastel.blue
+        hover_button_colour_light = Colours.Pastel.blue_hover
+
+        self.animated_panel = SideBar(self, 1.0, 0.7)
+
+        button = ctk.CTkButton(self, text='options', command=self.animated_panel.animate,
+                               fg_color=(button_colour_light, button_colour),
+                               hover_color=(hover_button_colour_light, hover_button_colour),
+                               font=('', 7),
+                               text_color=('black', 'white'))
+        button.grid(column=9, row=1, pady=10, padx=5, sticky="nsew")
 
     @staticmethod
     def create_small_layout():
@@ -70,6 +88,61 @@ class App(ctk.CTk):
         print('Current size: Medium')
         # Here, define what happens when the layout is medium
         # Similar to above, adjust the layout as needed for medium size
+
+
+class SideBar(ctk.CTkFrame):
+    def __init__(self, parent, start_pos, end_pos):
+        super().__init__(master=parent)
+
+        # General attributes
+        self.start_pos = start_pos
+        self.end_pos = end_pos
+        self.width = abs(start_pos - end_pos)
+
+        # Animation logic
+        self.pos = self.start_pos
+        self.in_start_pos = True
+
+        # Variables
+        self.is_on = ctk.BooleanVar(value=ctk.get_appearance_mode() == 'dark')
+
+        # Layout
+        self.place(relx=self.start_pos, rely=0.05, relwidth=self.width, relheight=0.755)
+
+        # Label for the switch
+        self.theme_label = ctk.CTkLabel(self, text='Toggle Light/Dark Mode')
+        self.theme_label.pack(pady=(10, 0))
+
+        # Switch for toggling light mode
+        self.theme_switch = ctk.CTkSwitch(self, text='', variable=self.is_on, command=self.toggle_theme)
+        self.theme_switch.pack(pady=10)
+
+    def toggle_theme(self):
+        # Change appearance mode based on the switch state
+        new_mode = 'light' if self.is_on.get() else 'dark'
+        ctk.set_appearance_mode(new_mode)
+
+    def animate(self):
+        if self.in_start_pos:
+            self.animate_forward()
+        else:
+            self.animate_backwards()
+
+    def animate_forward(self):
+        if self.pos > self.end_pos:
+            self.pos -= 0.008
+            self.place(relx=self.pos, rely=0.05, relwidth=self.width, relheight=0.755)
+            self.after(10, self.animate_forward)
+        else:
+            self.in_start_pos = False
+
+    def animate_backwards(self):
+        if self.pos < self.start_pos:
+            self.pos += 0.008
+            self.place(relx=self.pos, rely=0.05, relwidth=self.width, relheight=0.755)
+            self.after(10, self.animate_backwards)
+        else:
+            self.in_start_pos = True
 
 
 class SizeNotifier:

@@ -12,6 +12,7 @@ class Pastel:
     # Darker versions for hover
     purple_hover = "#A594C0"
     blue_hover = "#89A3C2"
+    blue_hover_hover = '#6e839c'
     green_hover = "#9FB9A1"
     yellow_hover = "#E1D790"
     pink_hover = "#E4B2C2"
