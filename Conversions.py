@@ -24,22 +24,28 @@ class BaseConverter(ctk.CTkFrame):
         button_colour_light = Colours.Pastel.blue
         button2_colour_light = Colours.Pastel.blue_hover
         button3_colour_light = Colours.Pastel.blue_hover_hover
+        font = ('Ebrima', 10.01)
+        big_font = ('Ebrima', 14)
 
         self.label1 = ctk.CTkLabel(self,
-                                   text=f'Enter {label_text}:')
+                                   text=f'Enter {label_text}:',
+                                   font=big_font)
 
         self.label2 = ctk.CTkLabel(self,
                                    text='TO',
                                    anchor='center',
-                                   font=('Open Sans', 10), )
+                                   font=font
+                                   )
 
         self.user_entry = ctk.CTkEntry(self,
-                                       textvariable=self.value_var)
+                                       textvariable=self.value_var,
+                                       font=big_font)
 
         self.dropdown_from = ctk.CTkOptionMenu(self,
                                                values=self.units,
                                                variable=self.unit_string_from,
-                                               font=('', 12),
+                                               font=font,
+                                               dropdown_font=font,
                                                button_color=(button2_colour_light, button_colour2),
                                                button_hover_color=(button3_colour_light, button_colour3),
                                                fg_color=(button_colour_light, button_colour),
@@ -48,7 +54,8 @@ class BaseConverter(ctk.CTkFrame):
         self.dropdown_to = ctk.CTkOptionMenu(self,
                                              values=self.units,
                                              variable=self.unit_string_to,
-                                             font=('', 12),
+                                             font=font,
+                                             dropdown_font=font,
                                              button_color=(button2_colour_light, button_colour2),
                                              button_hover_color=(button3_colour_light, button_colour3),
                                              fg_color=(button_colour_light, button_colour),
@@ -56,11 +63,15 @@ class BaseConverter(ctk.CTkFrame):
 
         self.button1 = ctk.CTkButton(self,
                                      text='Convert',
+                                     font=big_font,
                                      command=lambda: self.convert_units(),
                                      fg_color=(button_colour_light, button_colour),
                                      hover_color=(button2_colour_light, button_colour2),
                                      text_color=('black', 'white'))
-        self.result_label = ctk.CTkLabel(self, text="Conversion Result:", text_color=('black', 'white'))
+        self.result_label = ctk.CTkLabel(self,
+                                         text="Conversion Result:",
+                                         text_color=('black', 'white'),
+                                         font=big_font)
 
     def create_layout(self):
         self.grid_rowconfigure((0, 1, 2, 3, 4), weight=5, uniform='a')
@@ -69,9 +80,9 @@ class BaseConverter(ctk.CTkFrame):
 
         self.label1.grid(row=0, column=0, columnspan=3, sticky='news')
         self.label2.grid(row=2, column=0, columnspan=3, sticky='ew')
-        self.user_entry.grid(row=1, column=0, columnspan=3, sticky='news', pady=20)
-        self.dropdown_from.grid(row=2, column=0, sticky='ew', pady=10)
-        self.dropdown_to.grid(row=2, column=2, sticky='ew', pady=10)
+        self.user_entry.grid(row=1, column=0, columnspan=3, sticky='news', pady=20,padx=10)
+        self.dropdown_from.grid(row=2, column=0, sticky='ew', pady=10,padx=10)
+        self.dropdown_to.grid(row=2, column=2, sticky='ew', pady=10,padx=10)
         self.button1.grid(row=3, column=0, columnspan=3, sticky='news',
                           padx=30, pady=10)
         self.result_label.grid(row=4, column=0, columnspan=3, sticky='news')

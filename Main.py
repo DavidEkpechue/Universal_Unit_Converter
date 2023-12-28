@@ -6,7 +6,6 @@ from NavBar import *
 from Conversions import *
 
 
-
 def create_small_layout():
     print('small_layout')
 
@@ -31,6 +30,7 @@ class App(ctk.CTk):
         })
 
         # Create multiple pages (frames)
+
         self.pages = {
             'Distance': DistanceConverter(self),
             'Temperature': TemperatureConverter(self),
@@ -42,18 +42,47 @@ class App(ctk.CTk):
             'Pressure': PressureConverter(self),
             'Energy': EnergyConverter(self)
         }
-        iconx = 50
-        icony = 50
+
+        icon_x = 35
+        icon_y = 35
+
         self.icons = {
-            'Distance': ImageTk.PhotoImage(Image.open('Icons/ruler.png').resize((iconx, icony))),
-            'Temperature': ImageTk.PhotoImage(Image.open('Icons/thermometer.png').resize((iconx, icony))),
-            'Mass': ImageTk.PhotoImage(Image.open('Icons/weight.png').resize((iconx, icony))),
-            'Area': ImageTk.PhotoImage(Image.open('Icons/square.png').resize((iconx, icony))),
-            'Time': ImageTk.PhotoImage(Image.open('Icons/alarm-clock.png').resize((iconx, icony))),
-            'Speed': ImageTk.PhotoImage(Image.open('Icons/wind.png').resize((iconx, icony))),
-            'Volume': ImageTk.PhotoImage(Image.open('Icons/box.png').resize((iconx, icony))),
-            'Pressure': ImageTk.PhotoImage(Image.open('Icons/minimize-2.png').resize((iconx, icony))),
-            'Energy': ImageTk.PhotoImage(Image.open('Icons/zap.png').resize((iconx, icony)))
+            'Distance': ctk.CTkImage(
+                light_image=Image.open('Icons/ruler.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/ruler.png').resize((icon_x, icon_y))
+            ),
+            'Temperature': ctk.CTkImage(
+                light_image=Image.open('Icons/thermometer.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/thermometer.png').resize((icon_x, icon_y))
+            ),
+            'Mass': ctk.CTkImage(
+                light_image=Image.open('Icons/weight.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/weight.png').resize((icon_x, icon_y))
+            ),
+            'Area': ctk.CTkImage(
+                light_image=Image.open('Icons/square.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/square.png').resize((icon_x, icon_y))
+            ),
+            'Time': ctk.CTkImage(
+                light_image=Image.open('Icons/alarm-clock.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/alarm-clock.png').resize((icon_x, icon_y))
+            ),
+            'Speed': ctk.CTkImage(
+                light_image=Image.open('Icons/wind.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/wind.png').resize((icon_x, icon_y))
+            ),
+            'Volume': ctk.CTkImage(
+                light_image=Image.open('Icons/box.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/box.png').resize((icon_x, icon_y))
+            ),
+            'Pressure': ctk.CTkImage(
+                light_image=Image.open('Icons/minimize-2.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/minimize-2.png').resize((icon_x, icon_y))
+            ),
+            'Energy': ctk.CTkImage(
+                light_image=Image.open('Icons/zap.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/zap.png').resize((icon_x, icon_y))
+            )
         }
 
         # Configure grid system for the app
@@ -62,13 +91,9 @@ class App(ctk.CTk):
         self.grid_columnconfigure((0, 1, 2, 3, 4, 5, 6, 7, 8, 9), weight=1,
                                   uniform='a')
 
-        # Add pages to the window
-        for name, page in self.pages.items():
-            page.grid(row=0, column=0, columnspan=4, sticky="nsew")
-            page.grid_remove()
-
         self.navbar = NavigationBar(self, self.pages, self.icons)
-        self.navbar.grid(row=1, column=0, columnspan=10, sticky="nsew")
+        self.navbar.grid(row=1, column=0, columnspan=9,
+                         sticky="nsew", padx=10, pady=10)
 
         self.sidebar()
 
@@ -81,8 +106,9 @@ class App(ctk.CTk):
         button_colour_light = Colours.Pastel.blue
         hover_button_colour_light = Colours.Pastel.blue_hover
 
-        menu_icon = ImageTk.PhotoImage(Image.open('Icons/menu.png'))
-
+        menu_icon = ctk.CTkImage(light_image=Image.open('Icons/menu.png').resize((30, 30)),
+                                 dark_image=Image.open('Icons/light/menu.png').resize((30, 30))
+                                 )
 
         self.animated_panel = SideBar(self, 1.0, 0.7)
         # Modify the font here
@@ -91,8 +117,9 @@ class App(ctk.CTk):
                                fg_color=(button_colour_light, button_colour),
                                hover_color=(hover_button_colour_light, hover_button_colour),
                                text_color=('black', 'white'),
-                               image= menu_icon)
-        button.grid(column=9, row=1, pady=10, padx=5, sticky="nsew")
+                               image=menu_icon)
+        button.grid(column=10, row=1, pady=20, padx=15, sticky="nsew")
+
     @staticmethod
     def create_small_layout():
         print('Current size: Small')
