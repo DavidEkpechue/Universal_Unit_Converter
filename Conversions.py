@@ -1,6 +1,7 @@
 import tkinter as tk
 import customtkinter as ctk
 import Colours
+import requests
 
 
 class BaseConverter(ctk.CTkFrame):
@@ -242,3 +243,46 @@ class EnergyConverter(BaseConverter):
             'Electronvolts': 6.242e+18
         }
         super().__init__(parent, units, conversions, 'energy')
+
+
+class CurrencyConverter(BaseConverter):
+    def __init__(self, parent):
+        self.rates = {}
+        self.common_currencies = ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'SEK', 'NZD']
+        self.update_rates()
+
+        super().__init__(parent, self.common_currencies, self.rates, 'currency')
+
+    def update_rates(self):
+        # Fetch the latest currency rates from an API
+        url = 'https://api.exchangerate-api.com/v4/latest/EUR'  # Example API endpoint
+        try:
+            response = requests.get(url)
+            data = response.json()
+            all_rates = data['rates']
+
+            # Filter rates to include only common currencies
+            self.rates = {currency: all_rates[currency] for currency in self.common_currencies if currency in all_rates}
+        except Exception as e:
+            print(f"Error updating rates: {e}")
+            # Handle error (e.g., set default rates, show a message, etc.)
+
+    def convert_units(self):
+        try:
+            value = float(self.value_var.get())
+        except ValueError:
+            self.result_label["text"] = "Invalid input"
+            return
+
+        self.update_rates()  # Update rates every time a conversion is made
+
+        unit_from = self.unit_string_from.get()
+        unit_to = self.unit_string_to.get()
+
+        # Convert the input to the base currency (e.g., EUR)
+        base_currency_value = value / self.rates[unit_from]
+
+        # Then convert from the base currency to the target unit
+        result = base_currency_value * self.rates[unit_to]
+
+        self.result_label.configure(text=f"{result:.2f} {unit_to}")

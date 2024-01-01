@@ -33,7 +33,7 @@ class NavigationBar(ctk.CTkFrame):
 
     def create_layout(self):
         self.grid_rowconfigure(0, weight=1, uniform='a')  # Give weight to the row containing buttons
-        self.grid_columnconfigure((0, 1, 2, 3, 4, 5, 6, 7, 8), weight=1,
+        self.grid_columnconfigure((0, 1, 2, 3, 4, 5, 6, 7, 8, 9), weight=1,
                                   uniform='a')  # Adjust according to the number of buttons
 
     def select_page(self, selected_page):

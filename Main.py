@@ -40,7 +40,9 @@ class App(ctk.CTk):
             'Speed': SpeedConverter(self),
             'Volume': VolumeConverter(self),
             'Pressure': PressureConverter(self),
-            'Energy': EnergyConverter(self)
+            'Energy': EnergyConverter(self),
+            'Currency': CurrencyConverter(self) 
+
         }
 
         icon_x = 35
@@ -82,6 +84,10 @@ class App(ctk.CTk):
             'Energy': ctk.CTkImage(
                 light_image=Image.open('Icons/zap.png').resize((icon_x, icon_y)),
                 dark_image=Image.open('Icons/light/zap.png').resize((icon_x, icon_y))
+            ),
+            'Currency': ctk.CTkImage(
+                light_image=Image.open('Icons/dollar-sign.png').resize((icon_x, icon_y)),
+                dark_image=Image.open('Icons/light/dollar-sign (2).png').resize((icon_x, icon_y))
             )
         }
 
