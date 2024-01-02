@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 from opencage.geocoder import OpenCageGeocode
 
-def get_coordinates(city_name, api_key):
+def get_coordinates(city_name, api_key): 
     geocoder = OpenCageGeocode(api_key)
     query = city_name
     results = geocoder.geocode(query)
